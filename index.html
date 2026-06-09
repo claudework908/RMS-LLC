@@ -1,34 +1,1625 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Republic Maintenance Services LLC</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0a0a0a;
-      color: white;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 { color: #f97316; font-size: 3em; }
-    p { font-size: 1.2em; color: #ccc; }
-    .badge {
-      background: #f97316;
-      color: white;
-      padding: 10px 30px;
-      border-radius: 25px;
-      font-size: 1em;
-      margin-top: 20px;
-      display: inline-block;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RMS — Republic Maintenance Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Barlow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════
+   RESET & ROOT
+════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#1B365D;--red:#E31E24;--gold:#FFD700;--dark:#0f172a;
+  --navy2:#2a52a0;--green:#10b981;--purple:#7c3aed;
+  --bg:#f8f9fc;--white:#fff;--text:#374151;--muted:#64748b;--border:#e2e8f0;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);overflow-x:hidden;min-height:100vh;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#f1f1f1;}
+::-webkit-scrollbar-thumb{background:var(--navy);border-radius:3px;}
+
+/* ════════════════════════════════════════
+   PAGE SYSTEM — SPA
+════════════════════════════════════════ */
+.page{display:none;animation:fadeIn 0.35s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════════════════════════════
+   NAVBAR
+════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(27,54,93,0.97);backdrop-filter:blur(14px);
+  box-shadow:0 2px 24px rgba(0,0,0,0.35);border-bottom:3px solid var(--red);}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;height:70px;}
+.nav-brand{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
+.brand-text .brand-title{color:var(--gold);font-family:'Playfair Display',serif;
+  font-weight:700;font-size:14px;line-height:1.2;letter-spacing:.5px;}
+.brand-text .brand-sub{color:rgba(255,255,255,0.6);font-size:10px;letter-spacing:1.5px;}
+.nav-links{display:flex;gap:2px;align-items:center;}
+.nav-links button{padding:7px 13px;border-radius:8px;border:none;background:none;cursor:pointer;
+  font-family:'Barlow',sans-serif;font-weight:600;font-size:12.5px;
+  color:rgba(255,255,255,0.75);transition:all .2s;letter-spacing:.3px;}
+.nav-links button:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-links button.nav-active{background:var(--red);color:#fff;}
+.nav-admin{margin-left:6px;padding:7px 13px;border-radius:8px;
+  border:1.5px solid rgba(255,215,0,0.4);background:transparent;color:var(--gold);
+  cursor:pointer;font-weight:700;font-size:12px;font-family:'Barlow',sans-serif;transition:all .2s;}
+.nav-admin:hover{background:rgba(255,215,0,0.1);border-color:var(--gold);}
+.hamburger{display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:23px;height:2px;background:#fff;
+  border-radius:2px;transition:all .3s;}
+.mob-menu{display:none;position:fixed;top:70px;left:0;right:0;
+  background:rgba(20,40,80,0.98);backdrop-filter:blur(12px);
+  padding:12px;z-index:999;border-bottom:2px solid var(--red);}
+.mob-menu.open{display:block;}
+.mob-menu button{display:block;width:100%;padding:13px 16px;
+  text-align:left;border:none;background:none;color:#fff;
+  font-weight:600;font-size:14px;font-family:'Barlow',sans-serif;
+  cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.08);}
+.mob-menu button.nav-active{color:var(--gold);}
+@media(max-width:860px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+}
+@media(max-width:480px){
+  .nav-inner{padding:0 14px;}
+}
+
+/* ════════════════════════════════════════
+   SHARED COMPONENTS
+════════════════════════════════════════ */
+.page-wrap{padding-top:70px;}
+.page-hero{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--red) 55%,var(--navy) 100%);
+  padding:56px 24px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;}
+.page-hero-content{position:relative;z-index:1;}
+.page-hero h1{color:var(--gold);font-family:'Playfair Display',serif;
+  font-size:clamp(24px,4vw,48px);font-weight:800;margin-bottom:8px;}
+.page-hero p{color:rgba(255,255,255,0.85);font-size:clamp(14px,2vw,17px);}
+
+.section-wrap{max-width:1280px;margin:0 auto;padding:0 20px;}
+.section-title{color:var(--navy);font-family:'Playfair Display',serif;
+  font-size:clamp(22px,3vw,38px);font-weight:800;text-align:center;margin-bottom:6px;}
+.section-sub{color:var(--muted);font-size:15px;text-align:center;margin-bottom:40px;}
+
+/* CARDS */
+.white-card{background:#fff;border-radius:20px;padding:32px;
+  box-shadow:0 4px 20px rgba(27,54,93,0.08);border:1px solid var(--border);}
+
+/* BADGE */
+.badge{display:inline-block;padding:4px 11px;border-radius:50px;font-size:11px;font-weight:700;}
+.badge-blue{background:#dbeafe;color:#1d4ed8;}
+.badge-green{background:#d1fae5;color:#059669;}
+.badge-yellow{background:#fef3c7;color:#92400e;}
+.badge-red{background:#fee2e2;color:#dc2626;}
+.badge-purple{background:#ede9fe;color:var(--purple);}
+
+/* BTNS */
+.btn{padding:13px 26px;border-radius:50px;border:none;cursor:pointer;
+  font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;
+  letter-spacing:.5px;transition:all .25s;text-decoration:none;display:inline-block;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:#e6c200;box-shadow:0 6px 20px rgba(255,215,0,0.4);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--red);}
+.btn-outline-white{background:transparent;border:2px solid #fff;color:#fff;}
+.btn-outline-white:hover{background:#fff;color:var(--navy);}
+.btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-family:'Barlow',sans-serif;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-primary-sm{background:var(--navy);color:#fff;}
+.btn-primary-sm:hover{background:var(--red);}
+.btn-danger-sm{background:#fee2e2;color:var(--red);}
+.btn-danger-sm:hover{background:var(--red);color:#fff;}
+.btn-success-sm{background:#d1fae5;color:#059669;}
+.btn-success-sm:hover{background:#059669;color:#fff;}
+
+/* ALERTS */
+.alert{padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;
+  margin-bottom:16px;display:none;}
+.alert.show{display:block;}
+.alert-ok{background:#d1fae5;color:#059669;border:1px solid #a7f3d0;}
+.alert-err{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;}
+
+/* LOGO SVG INLINE */
+.rms-logo svg{display:block;}
+
+/* FOOTER */
+.site-footer{background:var(--dark);padding:56px 24px;color:#fff;margin-top:60px;}
+.footer-grid{max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px;}
+.footer-col h4{color:var(--gold);font-family:'Playfair Display',serif;font-size:15px;margin-bottom:10px;}
+.footer-col p,.footer-col a{color:rgba(255,255,255,0.65);font-size:13.5px;
+  line-height:1.9;text-decoration:none;display:block;}
+.footer-col a:hover{color:var(--gold);}
+.footer-bottom{text-align:center;border-top:1px solid rgba(255,255,255,0.08);
+  margin-top:36px;padding-top:20px;color:rgba(255,255,255,0.4);font-size:12px;}
+
+/* ════════════════════════════════════════
+   PAGE 1 — ACCUEIL
+════════════════════════════════════════ */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,rgba(27,54,93,0.94) 0%,rgba(227,30,36,0.88) 50%,rgba(27,54,93,0.96) 100%);
+  position:relative;overflow:hidden;padding-top:70px;}
+.hero::after{content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;}
+.hero-body{text-align:center;z-index:1;padding:40px 24px;max-width:920px;margin:0 auto;}
+@keyframes logoPulse{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.04) rotate(1deg);}}
+.hero-logo{animation:logoPulse 4s ease-in-out infinite;margin-bottom:28px;display:flex;justify-content:center;}
+.hero-title{color:var(--gold);font-family:'Playfair Display',serif;
+  font-size:clamp(20px,4vw,54px);font-weight:900;letter-spacing:2px;
+  margin-bottom:14px;text-shadow:0 4px 24px rgba(0,0,0,0.5);line-height:1.15;}
+.hero-sub{color:rgba(255,255,255,0.92);font-size:clamp(13px,2vw,20px);margin-bottom:10px;}
+.hero-tag{color:var(--gold);font-size:clamp(11px,1.5vw,16px);letter-spacing:3px;
+  font-weight:700;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+/* STATS */
+.stats-bar{background:var(--navy);padding:52px 24px;}
+.stats-grid{max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;}
+.stat-item{text-align:center;padding:24px 12px;border-radius:14px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,215,0,0.15);}
+.stat-n{color:var(--gold);font-size:38px;font-weight:900;font-family:'Playfair Display',serif;}
+.stat-l{color:rgba(255,255,255,0.75);font-size:12px;margin-top:4px;letter-spacing:1px;}
+
+/* CATALOGUE */
+.catalogue-section{padding:72px 0;}
+.dest-bar{display:flex;gap:10px;justify-content:center;margin:20px 0 36px;flex-wrap:wrap;}
+.dest-btn{padding:10px 22px;border-radius:50px;border:2px solid var(--border);
+  background:#fff;color:var(--navy);cursor:pointer;font-weight:700;
+  font-family:'Barlow',sans-serif;font-size:13px;transition:all .2s;}
+.dest-btn.active{border-color:var(--red);background:var(--red);color:#fff;}
+.vehicles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:8px;}
+.vehicle-card{background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 6px 24px rgba(27,54,93,0.09);border:1px solid rgba(27,54,93,0.07);
+  transition:transform .3s,box-shadow .3s;cursor:pointer;}
+.vehicle-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(27,54,93,0.16);}
+.vehicle-top{height:130px;background:linear-gradient(135deg,var(--navy),var(--navy2));
+  display:flex;align-items:center;justify-content:center;font-size:58px;position:relative;}
+.vehicle-badge{position:absolute;top:10px;right:10px;background:var(--red);
+  color:#fff;padding:4px 11px;border-radius:50px;font-size:12px;font-weight:700;}
+.vehicle-body{padding:20px;}
+.vehicle-name{color:var(--navy);font-family:'Playfair Display',serif;font-size:17px;
+  font-weight:700;margin-bottom:10px;}
+.vehicle-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+.vtag{background:#f0f4ff;color:var(--navy);padding:3px 9px;border-radius:50px;font-size:11px;font-weight:600;}
+.price-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;text-align:center;}
+.price-cell{padding:7px 4px;border-radius:8px;background:#f8f9fc;border:1px solid #eee;transition:all .2s;}
+.price-cell.active{background:var(--red);color:#fff;border:none;}
+.price-cell .pc-city{font-size:10px;opacity:.75;}
+.price-cell .pc-amt{font-weight:800;font-size:14px;}
+.reserve-btn{width:100%;padding:11px;border-radius:10px;border:none;
+  background:var(--navy);color:#fff;cursor:pointer;font-weight:700;
+  font-family:'Barlow',sans-serif;font-size:13.5px;transition:background .2s;}
+.reserve-btn:hover{background:var(--red);}
+
+/* AUTOECOLE SECTION */
+.autoecole-section{background:var(--navy);padding:72px 24px;}
+.autoecole-section h2{color:var(--gold);font-family:'Playfair Display',serif;
+  font-size:clamp(22px,3vw,40px);font-weight:800;text-align:center;margin-bottom:8px;}
+.autoecole-section .ae-sub{color:rgba(255,255,255,0.8);font-size:15px;
+  text-align:center;margin-bottom:40px;}
+.pkg-grid{max-width:1100px;margin:0 auto;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;}
+.pkg-card{background:rgba(255,255,255,0.07);border-radius:18px;padding:28px;position:relative;overflow:hidden;}
+.pkg-top-bar{position:absolute;top:0;left:0;right:0;height:4px;}
+.pkg-name{color:#fff;font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin-bottom:14px;}
+.pkg-price{font-size:30px;font-weight:900;margin-bottom:4px;}
+.pkg-dur{color:rgba(255,255,255,0.65);font-size:13px;margin-bottom:16px;}
+.pkg-detail{color:rgba(255,255,255,0.85);font-size:13.5px;margin-bottom:5px;}
+.pkg-btn{width:100%;margin-top:18px;padding:11px;border-radius:10px;
+  background:transparent;cursor:pointer;font-weight:700;font-size:13.5px;
+  font-family:'Barlow',sans-serif;transition:all .2s;}
+.ae-contact{margin-top:28px;color:rgba(255,255,255,0.75);font-size:15px;text-align:center;}
+
+/* MAINTENANCE */
+.maintenance-section{padding:72px 24px;background:#fff;}
+.maint-grid{max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px;}
+.maint-card{text-align:center;padding:28px 20px;border-radius:18px;
+  border:1.5px solid var(--border);transition:all .3s;cursor:default;}
+.maint-card:hover{background:var(--navy);border-color:var(--navy);}
+.maint-card:hover .mc-title,.maint-card:hover .mc-desc{color:#fff;}
+.maint-icon{font-size:44px;margin-bottom:14px;}
+.mc-title{color:var(--navy);font-family:'Playfair Display',serif;font-size:17px;
+  font-weight:700;margin-bottom:6px;transition:color .3s;}
+.mc-desc{color:#666;font-size:13.5px;line-height:1.65;transition:color .3s;}
+
+/* ════════════════════════════════════════
+   PAGE 2 — PORTFOLIO
+════════════════════════════════════════ */
+.tab-btns{display:flex;gap:10px;justify-content:center;margin:32px 0;flex-wrap:wrap;}
+.tab-btn{padding:11px 30px;border-radius:50px;border:none;cursor:pointer;
+  font-weight:700;font-size:14px;font-family:'Barlow',sans-serif;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);transition:all .2s;}
+.tab-btn.active{background:var(--navy);color:#fff;}
+.tab-btn:not(.active){background:#fff;color:var(--navy);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.gallery{columns:3 260px;gap:18px;max-width:1280px;margin:0 auto;padding:0 20px 56px;}
+.gal-item{break-inside:avoid;margin-bottom:18px;border-radius:14px;overflow:hidden;
+  box-shadow:0 6px 20px rgba(0,0,0,0.1);cursor:zoom-in;position:relative;}
+.gal-item img{width:100%;display:block;transition:transform .35s;}
+.gal-item:hover img{transform:scale(1.06);}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;padding:14px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.78));
+  color:#fff;font-size:12.5px;font-weight:600;}
+
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+  gap:24px;max-width:1200px;margin:0 auto;padding:0 20px 56px;}
+.vid-card{border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.1);background:#fff;}
+.vid-wrap{position:relative;padding-bottom:56.25%;height:0;}
+.vid-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+.vid-label{padding:14px;color:var(--navy);font-weight:600;font-size:14px;}
+
+.lightbox{display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.93);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:12px;}
+.lb-cap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  color:#fff;background:rgba(0,0,0,0.55);padding:7px 18px;border-radius:8px;font-size:14px;}
+
+/* ════════════════════════════════════════
+   PAGE 3 — INSCRIPTION
+════════════════════════════════════════ */
+.insc-wrap{max-width:880px;margin:0 auto;padding:40px 20px 60px;}
+.insc-card{background:#fff;border-radius:22px;padding:36px;
+  box-shadow:0 8px 32px rgba(27,54,93,0.1);}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.fld{display:flex;flex-direction:column;gap:6px;}
+.fld label{color:var(--navy);font-weight:700;font-size:13px;}
+.fld input,.fld select,.fld textarea{width:100%;padding:13px 15px;border-radius:10px;
+  border:2px solid var(--border);font-family:'Barlow',sans-serif;font-size:14px;
+  outline:none;transition:border .2s;background:#fff;color:var(--text);}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--red);}
+.fld textarea{min-height:90px;resize:vertical;}
+.fld.full{grid-column:1/-1;}
+
+.pay-section{margin-top:28px;border-top:2px solid #f0f4ff;padding-top:28px;}
+.pay-section h3{color:var(--navy);font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;}
+.pay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:22px;}
+.pay-opt{display:flex;flex-direction:column;align-items:center;padding:14px 8px;
+  border-radius:12px;border:2px solid var(--border);cursor:pointer;transition:all .2s;user-select:none;}
+.pay-icon{font-size:26px;margin-bottom:5px;}
+.pay-label{font-weight:700;font-size:11.5px;text-align:center;color:#555;}
+
+.qr-box{background:#f8f9fc;border-radius:14px;padding:22px;display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+.qr-instructions h4{color:var(--navy);font-family:'Playfair Display',serif;margin-bottom:6px;font-size:16px;}
+.qr-instructions p{font-size:13.5px;color:#555;line-height:1.75;}
+
+.insc-submit{width:100%;margin-top:28px;padding:17px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--navy),var(--red));color:#fff;
+  cursor:pointer;font-weight:800;font-size:17px;font-family:'Barlow',sans-serif;
+  letter-spacing:.8px;transition:transform .2s;box-shadow:0 8px 22px rgba(227,30,36,0.3);}
+.insc-submit:hover{transform:scale(1.015);}
+
+.insc-success{display:none;text-align:center;padding:60px 20px;}
+.insc-success.show{display:block;}
+.success-icon{font-size:80px;margin-bottom:16px;}
+.success-title{color:var(--navy);font-family:'Playfair Display',serif;font-size:28px;margin-bottom:8px;}
+.success-msg{color:#666;font-size:16px;line-height:1.7;margin-bottom:24px;}
+
+@media(max-width:560px){.form-grid-2{grid-template-columns:1fr;}}
+
+/* ════════════════════════════════════════
+   PAGE 4 — SERVICES
+════════════════════════════════════════ */
+.services-wrap{max-width:1280px;margin:0 auto;padding:48px 20px 60px;}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px;}
+.srv-card{background:#fff;border-radius:20px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.07);border:2px solid transparent;transition:all .3s;cursor:pointer;}
+.srv-card.open{box-shadow:0 12px 40px rgba(0,0,0,0.13);}
+.srv-bar{height:7px;}
+.srv-body{padding:26px;}
+.srv-icon{font-size:48px;margin-bottom:10px;}
+.srv-title{color:var(--navy);font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin-bottom:7px;}
+.srv-desc{color:#666;font-size:13.5px;line-height:1.7;margin-bottom:14px;}
+.srv-list{list-style:none;padding:0;margin-bottom:14px;border-top:1px solid #f5f5f5;padding-top:14px;}
+.srv-list li{padding:5px 0;border-bottom:1px solid #f8f8f8;font-size:13.5px;color:#444;display:flex;align-items:center;gap:8px;}
+.srv-cta{width:100%;padding:11px;border-radius:10px;cursor:pointer;font-weight:700;
+  font-size:13.5px;font-family:'Barlow',sans-serif;transition:all .2s;border:2px solid;
+  text-decoration:none;display:block;text-align:center;}
+
+/* ════════════════════════════════════════
+   PAGE 5 — BIOGRAPHIE
+════════════════════════════════════════ */
+.bio-wrap{max-width:1200px;margin:0 auto;padding:48px 20px 60px;}
+.bio-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:22px;}
+.bio-info-item{padding:18px;border-radius:14px;background:#f8f9fc;border:1px solid var(--border);}
+.bio-info-item .bi-icon{font-size:22px;margin-bottom:4px;}
+.bi-label{color:#999;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.bi-value{color:var(--navy);font-size:14px;font-weight:700;margin-top:3px;}
+.addr-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:28px 0;}
+.addr-card{border-radius:20px;padding:32px;color:#fff;}
+.addr-card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;margin-bottom:14px;}
+.addr-card p{font-size:14.5px;line-height:1.85;opacity:.9;}
+.addr-card .tel{font-size:15px;font-weight:700;margin-top:10px;}
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;}
+.staff-card{border:1.5px solid var(--border);border-radius:18px;padding:26px;
+  text-align:center;transition:box-shadow .3s;}
+.staff-card:hover{box-shadow:0 10px 32px rgba(27,54,93,0.12);}
+.staff-photo{font-size:56px;margin-bottom:10px;}
+.staff-name{color:var(--navy);font-family:'Playfair Display',serif;font-size:17px;font-weight:700;}
+.staff-role{color:var(--red);font-size:13px;font-weight:700;margin:3px 0 10px;}
+.staff-contact{color:#666;font-size:13px;margin-top:4px;}
+@media(max-width:600px){.addr-cards{grid-template-columns:1fr;}}
+
+/* ════════════════════════════════════════
+   PAGE 6 — RÉSEAUX
+════════════════════════════════════════ */
+.social-wrap{max-width:1000px;margin:0 auto;padding:48px 20px 60px;}
+.social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;}
+.social-card{background:#fff;border-radius:22px;padding:28px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.07);transition:transform .3s;cursor:pointer;
+  text-decoration:none;display:block;}
+.social-card:hover{transform:translateY(-5px);}
+.social-icon-box{width:60px;height:60px;border-radius:16px;display:flex;
+  align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;}
+.social-card h3{color:var(--navy);font-family:'Playfair Display',serif;
+  font-size:19px;font-weight:700;margin-bottom:7px;}
+.social-card p{color:#666;font-size:13px;line-height:1.7;margin-bottom:18px;}
+.social-visit{display:block;text-align:center;padding:11px 22px;border-radius:12px;
+  font-weight:700;font-size:13.5px;font-family:'Barlow',sans-serif;transition:opacity .2s;color:#fff;border:none;cursor:pointer;}
+.social-visit:hover{opacity:.85;}
+
+.contact-direct-bar{margin-top:44px;background:linear-gradient(135deg,var(--navy),var(--navy2));
+  border-radius:22px;padding:36px;text-align:center;color:#fff;}
+.contact-direct-bar h2{font-family:'Playfair Display',serif;font-size:26px;
+  font-weight:800;margin-bottom:6px;color:var(--gold);}
+.contact-direct-bar p{font-size:15px;opacity:.85;margin-bottom:22px;}
+.contact-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.contact-btn{padding:14px 24px;border-radius:14px;background:rgba(255,255,255,0.1);
+  color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,0.18);
+  text-align:center;min-width:170px;transition:background .2s;}
+.contact-btn:hover{background:rgba(255,255,255,0.2);}
+.cb-label{font-size:11px;opacity:.65;margin-bottom:3px;}
+.cb-num{font-weight:800;font-size:15px;color:var(--gold);}
+
+/* ════════════════════════════════════════
+   PAGE 7 — ADMIN (LOGIN)
+════════════════════════════════════════ */
+.admin-login-wrap{min-height:calc(100vh - 70px);display:flex;
+  align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0f172a,#1e3a5f,#0f172a);
+  position:relative;overflow:hidden;}
+.al-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.04;}
+.al-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.1);border-radius:26px;padding:44px;
+  width:100%;max-width:420px;position:relative;z-index:1;
+  box-shadow:0 40px 80px rgba(0,0,0,0.5);}
+.al-title{color:var(--gold);font-family:'Playfair Display',serif;font-size:26px;
+  font-weight:800;text-align:center;margin-bottom:4px;}
+.al-sub{color:rgba(255,255,255,0.5);font-size:13px;text-align:center;margin-bottom:28px;}
+.al-field{margin-bottom:18px;}
+.al-field label{display:block;color:rgba(255,255,255,0.7);font-size:12px;
+  font-weight:700;margin-bottom:7px;letter-spacing:.5px;}
+.al-field input{width:100%;padding:13px 15px;border-radius:10px;
+  border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);
+  color:#fff;font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border .2s;}
+.al-field input:focus{border-color:var(--gold);}
+.al-btn{width:100%;padding:15px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--navy),var(--red));color:#fff;
+  cursor:pointer;font-weight:800;font-size:15px;font-family:'Barlow',sans-serif;
+  margin-top:6px;transition:opacity .2s;letter-spacing:.8px;}
+.al-btn:hover{opacity:.9;}
+.al-err{display:none;background:rgba(227,30,36,0.2);border:1px solid var(--red);
+  border-radius:8px;padding:11px;color:#ff6b6b;font-size:13px;
+  text-align:center;margin-top:10px;}
+.al-hint{margin-top:18px;padding:14px;background:rgba(255,215,0,0.07);
+  border:1px solid rgba(255,215,0,0.2);border-radius:10px;
+  color:rgba(255,255,255,0.55);font-size:12px;text-align:center;line-height:1.9;}
+.al-hint strong{color:var(--gold);}
+
+/* ADMIN DASHBOARD */
+.admin-dash{display:none;}
+.admin-dash.show{display:block;}
+.adm-top{background:var(--navy);padding:0 20px;display:flex;
+  align-items:center;justify-content:space-between;height:52px;
+  border-bottom:2px solid var(--red);position:sticky;top:70px;z-index:100;}
+.adm-top-title{color:var(--gold);font-family:'Playfair Display',serif;font-size:15px;font-weight:700;}
+.adm-top-right{display:flex;gap:10px;align-items:center;}
+.adm-user{color:rgba(255,255,255,0.7);font-size:12px;}
+.adm-logout{padding:6px 14px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);
+  background:transparent;color:#fff;cursor:pointer;font-size:12px;font-weight:600;
+  font-family:'Barlow',sans-serif;transition:all .2s;}
+.adm-logout:hover{background:var(--red);border-color:var(--red);}
+
+.adm-layout{display:flex;min-height:calc(100vh - 122px);}
+.adm-sidebar{width:220px;background:#fff;border-right:1px solid var(--border);
+  padding:18px 0;flex-shrink:0;}
+.adm-nav-item{display:flex;align-items:center;gap:9px;width:100%;padding:10px 16px;
+  border:none;background:none;font-family:'Barlow',sans-serif;font-weight:600;
+  font-size:13.5px;color:#475569;cursor:pointer;transition:all .2s;text-align:left;}
+.adm-nav-item:hover{background:#f1f5f9;color:var(--navy);}
+.adm-nav-item.adm-active{background:#EFF6FF;color:var(--navy);}
+.adm-nav-item .ni-icon{font-size:17px;}
+
+.adm-main{flex:1;padding:28px;overflow-y:auto;background:#f1f5f9;}
+.adm-tab{display:none;}
+.adm-tab.adm-tab-active{display:block;}
+.adm-section-title{color:var(--navy);font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:800;margin-bottom:6px;}
+.adm-section-sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+
+.adm-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
+.adm-stat{background:#fff;border-radius:14px;padding:22px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid var(--border);}
+.adm-stat .as-label{font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.adm-stat .as-val{font-size:30px;font-weight:900;font-family:'Playfair Display',serif;}
+.adm-stat .as-sub{font-size:11px;color:#94a3b8;margin-top:3px;}
+
+.data-card{background:#fff;border-radius:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid var(--border);
+  overflow:hidden;margin-bottom:22px;}
+.dc-header{padding:18px 22px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid #f1f5f9;}
+.dc-header h3{color:var(--navy);font-family:'Playfair Display',serif;font-size:17px;font-weight:700;}
+.dc-actions{display:flex;gap:8px;}
+.dc-body{padding:22px;}
+
+table{width:100%;border-collapse:collapse;}
+th{padding:11px 18px;background:#f8fafc;font-size:10.5px;font-weight:700;
+  color:#64748b;letter-spacing:1px;text-transform:uppercase;
+  text-align:left;border-bottom:1px solid var(--border);}
+td{padding:13px 18px;border-bottom:1px solid #f8fafc;font-size:13.5px;color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+
+.ef-card{background:#fff;border-radius:14px;padding:26px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid var(--border);margin-bottom:18px;}
+.ef-card h3{color:var(--navy);font-family:'Playfair Display',serif;
+  font-size:17px;font-weight:700;margin-bottom:18px;
+  padding-bottom:14px;border-bottom:1px solid #f1f5f9;}
+.ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ef-fld{display:flex;flex-direction:column;gap:5px;}
+.ef-fld label{font-size:12.5px;font-weight:700;color:var(--text);}
+.ef-fld input,.ef-fld textarea,.ef-fld select{padding:9px 13px;border-radius:8px;
+  border:1.5px solid var(--border);font-family:'Barlow',sans-serif;
+  font-size:13.5px;outline:none;transition:border .2s;width:100%;}
+.ef-fld input:focus,.ef-fld textarea:focus{border-color:var(--navy);}
+.ef-fld textarea{min-height:75px;resize:vertical;}
+.ef-fld.full{grid-column:1/-1;}
+.ef-save{padding:11px 26px;border-radius:10px;border:none;background:var(--navy);
+  color:#fff;cursor:pointer;font-weight:700;font-size:13.5px;
+  font-family:'Barlow',sans-serif;transition:all .2s;margin-top:14px;}
+.ef-save:hover{background:var(--red);}
+
+.log-row{display:flex;align-items:center;gap:10px;padding:11px 15px;
+  border-bottom:1px solid #f8fafc;font-size:12.5px;}
+.log-row:last-child{border-bottom:none;}
+.log-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ld-ok{background:var(--green);}
+.ld-warn{background:var(--gold);}
+.ld-err{background:var(--red);}
+
+@media(max-width:860px){
+  .adm-layout{flex-direction:column;}
+  .adm-sidebar{width:100%;padding:8px;display:flex;flex-wrap:wrap;gap:4px;}
+  .adm-nav-item{flex:1;justify-content:center;min-width:80px;font-size:11px;padding:8px 6px;}
+  .ef-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
-  <h1>RMS</h1>
-  <h2>Republic Maintenance Services LLC</h2>
-  <p>Site en construction — Bientôt disponible</p>
-  <div class="badge">Coming Soon</div>
+
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="goto('accueil')">
+      <svg width="42" height="42" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/>
+        <circle cx="60" cy="60" r="44" fill="#E31E24"/>
+        <ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/>
+        <path d="M38 70 Q44 65 50 70 Q56 75 62 70 Q68 65 74 70 Q80 75 82 72" stroke="#1B365D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text>
+      </svg>
+      <div class="brand-text">
+        <div class="brand-title">REPUBLIC</div>
+        <div class="brand-sub">MAINTENANCE SERVICES</div>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <button onclick="goto('accueil')" id="nav-accueil" class="nav-active">Accueil</button>
+      <button onclick="goto('portfolio')" id="nav-portfolio">Portfolio</button>
+      <button onclick="goto('inscription')" id="nav-inscription">Inscription</button>
+      <button onclick="goto('services')" id="nav-services">Services</button>
+      <button onclick="goto('biographie')" id="nav-biographie">Biographie</button>
+      <button onclick="goto('reseaux')" id="nav-reseaux">Réseaux</button>
+      <button class="nav-admin" onclick="goto('admin')">🔐 Admin</button>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <button onclick="goto('accueil');toggleMob()" id="mob-accueil" class="nav-active">🏠 Accueil</button>
+  <button onclick="goto('portfolio');toggleMob()" id="mob-portfolio">📸 Portfolio</button>
+  <button onclick="goto('inscription');toggleMob()" id="mob-inscription">📋 Inscription</button>
+  <button onclick="goto('services');toggleMob()" id="mob-services">🛠️ Services</button>
+  <button onclick="goto('biographie');toggleMob()" id="mob-biographie">🏢 Biographie</button>
+  <button onclick="goto('reseaux');toggleMob()" id="mob-reseaux">🌐 Réseaux</button>
+  <button onclick="goto('admin');toggleMob()">🔐 Admin</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — ACCUEIL
+════════════════════════════════════════ -->
+<div class="page active" id="page-accueil">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="hero-logo">
+        <svg width="130" height="130" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/>
+          <circle cx="60" cy="60" r="50" fill="white" stroke="#1B365D" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="44" fill="#E31E24"/>
+          <line x1="60" y1="33" x2="60" y2="25" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="72" y1="36" x2="76" y2="29" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="80" y1="44" x2="87" y2="40" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="48" y1="36" x2="44" y2="29" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="40" y1="44" x2="33" y2="40" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/>
+          <path d="M38 70 Q44 65 50 70 Q56 75 62 70 Q68 65 74 70 Q80 75 82 72" stroke="#1B365D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M38 76 Q44 71 50 76 Q56 81 62 76 Q68 71 74 76 Q80 81 82 78" stroke="#1B365D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path id="arc1" d="M 16 60 A 44 44 0 0 1 104 60" fill="none"/>
+          <text fill="#1B365D" font-size="7.5" font-family="serif" font-weight="bold"><textPath href="#arc1" startOffset="6%">REPUBLIC MAINTENANCE SERVICES</textPath></text>
+          <text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text>
+        </svg>
+      </div>
+      <h1 class="hero-title">REPUBLIC MAINTENANCE SERVICES</h1>
+      <p class="hero-sub">Votre partenaire de confiance en Haïti &amp; aux États-Unis</p>
+      <p class="hero-tag">Location • Maintenance • Auto-École • Construction</p>
+      <div class="hero-btns">
+        <button class="btn btn-gold" onclick="goto('services')">📋 Nos Services</button>
+        <button class="btn btn-outline-white" onclick="goto('inscription')">🚗 Réserver</button>
+        <button class="btn btn-outline-white" onclick="goto('biographie')">📞 Contact</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-n">7+</div><div class="stat-l">Véhicules</div></div>
+      <div class="stat-item"><div class="stat-n">2</div><div class="stat-l">Pays</div></div>
+      <div class="stat-item"><div class="stat-n">10+</div><div class="stat-l">Ans d'Expérience</div></div>
+      <div class="stat-item"><div class="stat-n">500+</div><div class="stat-l">Clients Satisfaits</div></div>
+      <div class="stat-item"><div class="stat-n">3</div><div class="stat-l">Services Majeurs</div></div>
+      <div class="stat-item"><div class="stat-n">24/7</div><div class="stat-l">Disponibilité</div></div>
+    </div>
+  </section>
+
+  <!-- CATALOGUE -->
+  <section class="catalogue-section">
+    <div class="section-wrap">
+      <h2 class="section-title">🚛 Catalogue de Location</h2>
+      <p class="section-sub" style="margin-bottom:0">Sélectionnez votre destination pour voir les tarifs</p>
+      <div class="dest-bar">
+        <button class="dest-btn active" onclick="setDest('pap',this)">📍 Port-au-Prince</button>
+        <button class="dest-btn" onclick="setDest('cayes',this)">📍 Les Cayes</button>
+        <button class="dest-btn" onclick="setDest('cap',this)">📍 Cap-Haïtien</button>
+      </div>
+      <div class="vehicles-grid" id="vehiclesGrid"></div>
+    </div>
+  </section>
+
+  <!-- AUTO-ÉCOLE -->
+  <section class="autoecole-section">
+    <h2>🎓 RMS Auto-École</h2>
+    <p class="ae-sub">Obtenez votre permis de conduire en 30 à 60 jours</p>
+    <div class="pkg-grid">
+      <div class="pkg-card" style="border:2px solid #1B365D">
+        <div class="pkg-top-bar" style="background:#1B365D"></div>
+        <div class="pkg-name">Forfait Standard</div>
+        <div class="pkg-price" style="color:#FFD700">10 000 HTG</div>
+        <div class="pkg-dur">30 jours</div>
+        <div class="pkg-detail">📚 Théorie: 24h</div>
+        <div class="pkg-detail">🚗 Pratique: 15h</div>
+        <button class="pkg-btn" onclick="goto('inscription')" style="border:2px solid #FFD700;color:#FFD700">S'inscrire →</button>
+      </div>
+      <div class="pkg-card" style="border:2px solid #E31E24">
+        <div class="pkg-top-bar" style="background:#E31E24"></div>
+        <div class="pkg-name">Forfait Complet</div>
+        <div class="pkg-price" style="color:#E31E24">15 000 HTG</div>
+        <div class="pkg-dur">45 jours</div>
+        <div class="pkg-detail">📚 Théorie: 24h</div>
+        <div class="pkg-detail">🚗 Pratique: 35h</div>
+        <button class="pkg-btn" onclick="goto('inscription')" style="border:2px solid #E31E24;color:#E31E24">S'inscrire →</button>
+      </div>
+      <div class="pkg-card" style="border:2px solid #FFD700">
+        <div class="pkg-top-bar" style="background:#FFD700"></div>
+        <div class="pkg-name">Forfait Premium</div>
+        <div class="pkg-price" style="color:#FFD700">18 000 HTG</div>
+        <div class="pkg-dur">60 jours</div>
+        <div class="pkg-detail">📚 Théorie: 24h</div>
+        <div class="pkg-detail">🚗 Pratique: 45h</div>
+        <button class="pkg-btn" onclick="goto('inscription')" style="border:2px solid #FFD700;color:#FFD700">S'inscrire →</button>
+      </div>
+    </div>
+    <p class="ae-contact">📞 +509 47 45-1919 &nbsp;|&nbsp; ✉️ republicmainservices@gmail.com</p>
+  </section>
+
+  <!-- MAINTENANCE -->
+  <section class="maintenance-section">
+    <h2 class="section-title">🔧 Services de Maintenance</h2>
+    <p class="section-sub">Construction, réparation et entretien professionnel</p>
+    <div class="maint-grid">
+      <div class="maint-card"><div class="maint-icon">🔧</div><div class="mc-title">Plomberie</div><div class="mc-desc">Installation, réparation et entretien de systèmes de plomberie résidentiels et commerciaux.</div></div>
+      <div class="maint-card"><div class="maint-icon">⚡</div><div class="mc-title">Électricité</div><div class="mc-desc">Travaux électriques, installations, mise aux normes et dépannage d'urgence.</div></div>
+      <div class="maint-card"><div class="maint-icon">🧱</div><div class="mc-title">Maçonnerie</div><div class="mc-desc">Construction, rénovation, fondations, murs et travaux de béton armé.</div></div>
+      <div class="maint-card"><div class="maint-icon">🎨</div><div class="mc-title">Peinture</div><div class="mc-desc">Peinture intérieure et extérieure, ravalement de façade, décoration.</div></div>
+      <div class="maint-card"><div class="maint-icon">💧</div><div class="mc-title">Livraison d'Eau</div><div class="mc-desc">Approvisionnement en eau potable par camion citerne de 3500 gallons.</div></div>
+      <div class="maint-card"><div class="maint-icon">🏠</div><div class="mc-title">Déménagement</div><div class="mc-desc">Location d'engins lourds avec opérateur, main-d'œuvre qualifiée.</div></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <svg width="60" height="60" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/><circle cx="60" cy="60" r="44" fill="#E31E24"/><ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/><text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text></svg>
+        <p style="margin-top:14px;font-size:13.5px;line-height:1.85;">Fournir des services de qualité supérieure en location de véhicules lourds, maintenance et formation à la conduite.</p>
+      </div>
+      <div class="footer-col">
+        <h4>📍 Siège Social</h4>
+        <p>228 Route 59 Suite 247<br/>Nanuet NY 10954, États-Unis</p>
+        <a href="tel:+18452430875">📞 (845) 243-0875</a>
+      </div>
+      <div class="footer-col">
+        <h4>📍 Bureau Haïti</h4>
+        <p>Boulevard 15 Octobre #6<br/>Torcel, Tabarre 68, Port-au-Prince</p>
+        <a href="tel:+50937972626">📞 +509 37 97-2626</a>
+      </div>
+      <div class="footer-col">
+        <h4>📬 Contact</h4>
+        <a href="mailto:republicmainservices@gmail.com">✉️ republicmainservices@gmail.com</a>
+        <a href="https://wa.me/50937972626" target="_blank">💬 WhatsApp</a>
+        <a href="#" onclick="goto('reseaux');return false;">🌐 Réseaux Sociaux</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Republic Maintenances Services LLC — Tous droits réservés</div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — PORTFOLIO
+════════════════════════════════════════ -->
+<div class="page" id="page-portfolio">
+  <div class="page-wrap">
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <h1>📸 Portfolio RMS</h1>
+        <p>Images &amp; Vidéos de nos activités</p>
+      </div>
+    </div>
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="showPortfolioTab('photos',this)">🖼️ Photos</button>
+      <button class="tab-btn" onclick="showPortfolioTab('videos',this)">🎬 Vidéos</button>
+    </div>
+    <div class="tab-content active" id="pt-photos">
+      <div class="gallery" id="galleryGrid"></div>
+    </div>
+    <div class="tab-content" id="pt-videos">
+      <div class="video-grid" id="videoGrid"></div>
+    </div>
+  </div>
+  <div class="lightbox" id="lightbox" onclick="closeLB()">
+    <img id="lbImg" src="" alt=""/>
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — INSCRIPTION
+════════════════════════════════════════ -->
+<div class="page" id="page-inscription">
+  <div class="page-wrap">
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <h1>📋 Inscription &amp; Paiement</h1>
+        <p>Remplissez le formulaire pour accéder à nos services</p>
+      </div>
+    </div>
+    <div class="insc-wrap">
+      <!-- SUCCESS -->
+      <div class="insc-success" id="inscSuccess">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Inscription Réussie!</div>
+        <p class="success-msg" id="successMsg">Nous vous contacterons sous 24h.</p>
+        <button class="btn btn-navy" onclick="resetInsc()">Nouvelle Inscription</button>
+      </div>
+      <!-- FORM -->
+      <div class="insc-card" id="inscForm">
+        <div class="form-grid-2">
+          <div class="fld"><label>Nom *</label><input id="iNom" placeholder="Votre nom"/></div>
+          <div class="fld"><label>Prénom *</label><input id="iPrenom" placeholder="Votre prénom"/></div>
+          <div class="fld"><label>Email *</label><input id="iEmail" type="email" placeholder="votre@email.com"/></div>
+          <div class="fld"><label>Téléphone *</label><input id="iPhone" placeholder="+509 XX XX-XXXX"/></div>
+        </div>
+        <div class="fld full" style="margin-bottom:18px;">
+          <label>Service Souhaité *</label>
+          <select id="iService">
+            <option value="location">🚛 Location de Véhicule</option>
+            <option value="autoecole">🎓 Auto-École</option>
+            <option value="maintenance">🔧 Maintenance / Construction</option>
+            <option value="achat">🛒 Achat de Véhicule</option>
+            <option value="documentation">📄 Demande de Documentation</option>
+          </select>
+        </div>
+        <div class="fld full" style="margin-bottom:0">
+          <label>Message / Détails</label>
+          <textarea id="iMessage" placeholder="Précisez votre demande, dates, destinations..."></textarea>
+        </div>
+
+        <!-- PAIEMENT -->
+        <div class="pay-section">
+          <h3>💳 Méthode de Paiement</h3>
+          <div class="pay-grid" id="payGrid"></div>
+          <div class="qr-box">
+            <div style="text-align:center">
+              <div style="background:#fff;padding:14px;border-radius:12px;display:inline-block;box-shadow:0 4px 14px rgba(0,0,0,0.1);">
+                <svg width="90" height="90" viewBox="0 0 100 100">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="5" y="5" width="35" height="35" fill="none" stroke="#1B365D" stroke-width="4"/>
+                  <rect x="13" y="13" width="19" height="19" fill="#1B365D"/>
+                  <rect x="60" y="5" width="35" height="35" fill="none" stroke="#1B365D" stroke-width="4"/>
+                  <rect x="68" y="13" width="19" height="19" fill="#1B365D"/>
+                  <rect x="5" y="60" width="35" height="35" fill="none" stroke="#1B365D" stroke-width="4"/>
+                  <rect x="13" y="68" width="19" height="19" fill="#1B365D"/>
+                  <rect x="42" y="42" width="7" height="7" fill="#1B365D"/>
+                  <rect x="52" y="52" width="7" height="7" fill="#1B365D"/>
+                  <rect x="62" y="62" width="7" height="7" fill="#1B365D"/>
+                  <rect x="72" y="42" width="7" height="7" fill="#1B365D"/>
+                  <rect x="82" y="52" width="7" height="7" fill="#1B365D"/>
+                  <rect x="42" y="72" width="7" height="7" fill="#1B365D"/>
+                  <rect x="52" y="82" width="7" height="7" fill="#1B365D"/>
+                </svg>
+              </div>
+              <div style="font-size:11px;color:#888;margin-top:5px;font-family:'Barlow',sans-serif;">Scanner pour payer</div>
+            </div>
+            <div class="qr-instructions" style="flex:1;min-width:200px;">
+              <h4>Instructions de Paiement</h4>
+              <p id="payInstructions">📱 <strong>MonCash:</strong> Envoyez au <strong>+509 37 97-2626</strong><br/>Référence: nom + service</p>
+            </div>
+          </div>
+        </div>
+        <button class="insc-submit" onclick="submitInsc()">🚀 Soumettre mon Inscription</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — SERVICES
+════════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-wrap">
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <h1>🛠️ Nos Services</h1>
+        <p>Choisissez le service qui correspond à votre besoin</p>
+      </div>
+    </div>
+    <div class="services-wrap">
+      <div class="srv-grid" id="servicesGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — BIOGRAPHIE
+════════════════════════════════════════ -->
+<div class="page" id="page-biographie">
+  <div class="page-wrap">
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <svg width="80" height="80" viewBox="0 0 120 120" fill="none" style="margin:0 auto 16px;display:block;">
+          <circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/>
+          <circle cx="60" cy="60" r="44" fill="#E31E24"/>
+          <ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/>
+          <path d="M38 70 Q44 65 50 70 Q56 75 62 70 Q68 65 74 70 Q80 75 82 72" stroke="#1B365D" stroke-width="2.5" fill="none"/>
+          <text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text>
+        </svg>
+        <h1>Republic Maintenances Services LLC</h1>
+        <p>Fondée en 2015 | LLC — États-Unis</p>
+      </div>
+    </div>
+    <div class="bio-wrap">
+      <div class="white-card" style="margin-bottom:24px;">
+        <h2 style="color:var(--navy);font-family:'Playfair Display',serif;font-size:24px;margin-bottom:12px;">🎯 Notre Mission</h2>
+        <p style="color:#555;font-size:15px;line-height:1.9;">Fournir des services de qualité supérieure en location de véhicules lourds, maintenance bâtimentaire et formation à la conduite en Haïti et aux États-Unis.</p>
+      </div>
+      <div class="white-card" style="margin-bottom:24px;">
+        <h2 style="color:var(--navy);font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;">📋 Informations Légales</h2>
+        <div class="bio-info-grid">
+          <div class="bio-info-item"><div class="bi-icon">🏢</div><div class="bi-label">Raison Sociale</div><div class="bi-value">Republic Maintenances Services LLC</div></div>
+          <div class="bio-info-item"><div class="bi-icon">📜</div><div class="bi-label">Type</div><div class="bi-value">LLC — États-Unis</div></div>
+          <div class="bio-info-item"><div class="bi-icon">📅</div><div class="bi-label">Fondée</div><div class="bi-value">2015</div></div>
+          <div class="bio-info-item"><div class="bi-icon">✉️</div><div class="bi-label">Email</div><div class="bi-value">republicmainservices@gmail.com</div></div>
+          <div class="bio-info-item"><div class="bi-icon">📞</div><div class="bi-label">Tél Haïti</div><div class="bi-value">+509 37 97-2626</div></div>
+          <div class="bio-info-item"><div class="bi-icon">📱</div><div class="bi-label">Auto-École</div><div class="bi-value">+509 47 45-1919</div></div>
+        </div>
+      </div>
+      <div class="addr-cards">
+        <div class="addr-card" style="background:var(--navy)">
+          <h3>📍 Siège Social</h3>
+          <p>228 Route 59 Suite 247<br/>Nanuet NY 10954<br/>États-Unis</p>
+          <div class="tel">📞 (845) 243-0875</div>
+        </div>
+        <div class="addr-card" style="background:var(--red)">
+          <h3>📍 Bureau Haïti</h3>
+          <p>Boulevard 15 Octobre #6<br/>Torcel, Tabarre 68<br/>Port-au-Prince, Haïti</p>
+          <div class="tel">📞 +509 37 97-2626</div>
+        </div>
+      </div>
+      <div class="white-card">
+        <h2 style="color:var(--navy);font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;">👥 Notre Équipe</h2>
+        <div class="staff-grid">
+          <div class="staff-card">
+            <div class="staff-photo">👤</div>
+            <div class="staff-name">Jean Claude HILAIRE</div>
+            <div class="staff-role">Country Manager</div>
+            <div class="staff-contact">📞 +509 37 97-2626</div>
+            <div class="staff-contact">✉️ republicmainservices@gmail.com</div>
+          </div>
+          <div class="staff-card">
+            <div class="staff-photo">👥</div>
+            <div class="staff-name">Équipe RMS</div>
+            <div class="staff-role">Service Clients</div>
+            <div class="staff-contact">📞 +509 47 45-1919</div>
+            <div class="staff-contact">✉️ republicmainservices@gmail.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — RÉSEAUX
+════════════════════════════════════════ -->
+<div class="page" id="page-reseaux">
+  <div class="page-wrap">
+    <div class="page-hero">
+      <div class="page-hero-content">
+        <h1>🌐 Réseaux Sociaux</h1>
+        <p>Rejoignez la communauté RMS sur toutes les plateformes</p>
+      </div>
+    </div>
+    <div class="social-wrap">
+      <div class="social-grid">
+        <a class="social-card" href="https://wa.me/50937972626" target="_blank" style="border:1px solid #dcfce7">
+          <div class="social-icon-box" style="background:#dcfce7">💬</div>
+          <h3>WhatsApp</h3>
+          <p>Contactez-nous directement pour une réponse rapide 24/7</p>
+          <div class="social-visit" style="background:#25D366">Visiter WhatsApp →</div>
+        </a>
+        <a class="social-card" href="https://facebook.com/republicmaintenanceservices" target="_blank" style="border:1px solid #eff6ff">
+          <div class="social-icon-box" style="background:#eff6ff">👥</div>
+          <h3>Facebook</h3>
+          <p>Suivez notre page pour les dernières nouvelles et offres spéciales</p>
+          <div class="social-visit" style="background:#1877F2">Visiter Facebook →</div>
+        </a>
+        <a class="social-card" href="https://tiktok.com/@jeanclaudehilaire2" target="_blank" style="border:1px solid #f0f0f0">
+          <div class="social-icon-box" style="background:#f0f0f0">🎵</div>
+          <h3>TikTok</h3>
+          <p>Vidéos de cours de conduite et présentation de flotte</p>
+          <div class="social-visit" style="background:#010101">Visiter TikTok →</div>
+        </a>
+        <a class="social-card" href="https://x.com/rms_haiti" target="_blank" style="border:1px solid #f9f9f9">
+          <div class="social-icon-box" style="background:#f9f9f9">🐦</div>
+          <h3>X (Twitter)</h3>
+          <p>Actualités en temps réel sur X/Twitter</p>
+          <div class="social-visit" style="background:#000">Visiter X →</div>
+        </a>
+        <a class="social-card" href="https://instagram.com/rms_haiti" target="_blank" style="border:1px solid #fdf2f8">
+          <div class="social-icon-box" style="background:#fdf2f8">📸</div>
+          <h3>Instagram</h3>
+          <p>Photos et stories sur Instagram</p>
+          <div class="social-visit" style="background:#E1306C">Visiter Instagram →</div>
+        </a>
+        <a class="social-card" href="mailto:republicmainservices@gmail.com" style="border:1px solid #fef2f2">
+          <div class="social-icon-box" style="background:#fef2f2">📧</div>
+          <h3>Email</h3>
+          <p>republicmainservices@gmail.com</p>
+          <div class="social-visit" style="background:#EA4335">Envoyer Email →</div>
+        </a>
+      </div>
+      <div class="contact-direct-bar">
+        <h2>📞 Contact Direct</h2>
+        <p>Appelez-nous directement pour une assistance immédiate</p>
+        <div class="contact-btns">
+          <a href="tel:+50937972626" class="contact-btn"><div class="cb-label">Haïti — Principal</div><div class="cb-num">+509 37 97-2626</div></a>
+          <a href="tel:+50947451919" class="contact-btn"><div class="cb-label">Auto-École</div><div class="cb-num">+509 47 45-1919</div></a>
+          <a href="tel:+18452430875" class="contact-btn"><div class="cb-label">USA</div><div class="cb-num">(845) 243-0875</div></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE — ADMIN
+════════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <!-- LOGIN -->
+  <div class="admin-login-wrap" id="adminLogin">
+    <div class="al-bg">
+      <svg width="500" height="500" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/><circle cx="60" cy="60" r="44" fill="#E31E24"/><ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/><text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text></svg>
+    </div>
+    <div class="al-card">
+      <div style="text-align:center;margin-bottom:20px">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="58" fill="white" stroke="#1B365D" stroke-width="3"/><circle cx="60" cy="60" r="44" fill="#E31E24"/><ellipse cx="60" cy="58" rx="14" ry="10" fill="#FFD700"/><path d="M38 70 Q44 65 50 70 Q56 75 62 70 Q68 65 74 70 Q80 75 82 72" stroke="#1B365D" stroke-width="2.5" fill="none"/><text x="60" y="100" text-anchor="middle" fill="#1B365D" font-size="9" font-weight="bold" font-family="serif">RMS</text></svg>
+      </div>
+      <div class="al-title">🔐 Portail Administrateur</div>
+      <div class="al-sub">Republic Maintenance Services — Accès Sécurisé</div>
+      <div class="al-field">
+        <label>NOM D'ADMINISTRATEUR</label>
+        <input type="text" id="alUser" placeholder="Nom administrateur" onkeypress="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="al-field">
+        <label>CODE ADMINISTRATIF</label>
+        <input type="password" id="alCode" placeholder="••••••••••••" onkeypress="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <button class="al-btn" onclick="doLogin()">🚀 ACCÉDER AU PORTAIL</button>
+      <div class="al-err" id="alErr">❌ Identifiants incorrects. Vérifiez vos informations.</div>
+      <div class="al-hint">
+        <strong>Administrateur:</strong> Jean Claude HILAIRE<br/>
+        <strong>Nom:</strong> <code>rms_admin</code> &nbsp;|&nbsp; <strong>Code:</strong> <code>RMS@2025!</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="admin-dash" id="adminDash">
+    <div class="adm-top">
+      <div class="adm-top-title">⚙️ PORTAIL ADMIN — RMS</div>
+      <div class="adm-top-right">
+        <span class="adm-user">Connecté: <strong id="admUserDisplay" style="color:var(--gold)">Admin</strong></span>
+        <button class="adm-logout" onclick="doLogout()">🔒 Déconnexion</button>
+      </div>
+    </div>
+    <div class="adm-layout">
+      <!-- SIDEBAR -->
+      <div class="adm-sidebar">
+        <button class="adm-nav-item adm-active" onclick="admTab('dashboard',this)"><span class="ni-icon">📊</span> Tableau de Bord</button>
+        <button class="adm-nav-item" onclick="admTab('inscriptions',this)"><span class="ni-icon">📋</span> Inscriptions</button>
+        <button class="adm-nav-item" onclick="admTab('contenu',this)"><span class="ni-icon">✏️</span> Contenu</button>
+        <button class="adm-nav-item" onclick="admTab('tarifs',this)"><span class="ni-icon">💰</span> Tarifs</button>
+        <button class="adm-nav-item" onclick="admTab('portfolio_adm',this)"><span class="ni-icon">📸</span> Portfolio</button>
+        <button class="adm-nav-item" onclick="admTab('securite',this)"><span class="ni-icon">🔐</span> Sécurité</button>
+      </div>
+
+      <!-- MAIN -->
+      <div class="adm-main">
+
+        <!-- ── DASHBOARD ── -->
+        <div class="adm-tab adm-tab-active" id="adm-dashboard">
+          <div class="adm-section-title">📊 Tableau de Bord</div>
+          <div class="adm-section-sub">Vue d'ensemble des activités RMS</div>
+          <div class="adm-stats">
+            <div class="adm-stat"><div class="as-label">Inscriptions</div><div class="as-val" id="ds-total" style="color:var(--navy)">0</div><div class="as-sub">Total reçues</div></div>
+            <div class="adm-stat"><div class="as-label">Aujourd'hui</div><div class="as-val" id="ds-today" style="color:var(--green)">0</div><div class="as-sub">Nouvelles</div></div>
+            <div class="adm-stat"><div class="as-label">Véhicules</div><div class="as-val" style="color:var(--red)">7</div><div class="as-sub">Dans la flotte</div></div>
+            <div class="adm-stat"><div class="as-label">Services</div><div class="as-val" style="color:var(--purple)">6</div><div class="as-sub">Actifs</div></div>
+          </div>
+          <div class="data-card">
+            <div class="dc-header"><h3>📋 Dernières Inscriptions</h3></div>
+            <div style="overflow-x:auto">
+              <table><thead><tr><th>Nom</th><th>Service</th><th>Téléphone</th><th>Paiement</th><th>Date</th></tr></thead>
+              <tbody id="ds-recent"></tbody></table>
+            </div>
+          </div>
+          <div class="data-card">
+            <div class="dc-header"><h3>⚡ Actions Rapides</h3></div>
+            <div class="dc-body" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;padding:20px;">
+              <button onclick="admTab('inscriptions',null)" style="padding:14px;border-radius:12px;border:2px solid var(--navy);background:#EFF6FF;color:var(--navy);cursor:pointer;font-weight:700;font-family:'Barlow',sans-serif;">📋 Inscriptions</button>
+              <button onclick="admTab('contenu',null)" style="padding:14px;border-radius:12px;border:2px solid var(--red);background:#FFF5F5;color:var(--red);cursor:pointer;font-weight:700;font-family:'Barlow',sans-serif;">✏️ Contenu</button>
+              <button onclick="admTab('tarifs',null)" style="padding:14px;border-radius:12px;border:2px solid var(--green);background:#F0FDF4;color:var(--green);cursor:pointer;font-weight:700;font-family:'Barlow',sans-serif;">💰 Tarifs</button>
+              <button onclick="admTab('portfolio_adm',null)" style="padding:14px;border-radius:12px;border:2px solid var(--purple);background:#F5F3FF;color:var(--purple);cursor:pointer;font-weight:700;font-family:'Barlow',sans-serif;">📸 Portfolio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── INSCRIPTIONS ── -->
+        <div class="adm-tab" id="adm-inscriptions">
+          <div class="adm-section-title">📋 Inscriptions</div>
+          <div class="adm-section-sub">Toutes les demandes reçues via le site</div>
+          <div class="alert alert-ok" id="inscAlert"></div>
+          <div class="data-card">
+            <div class="dc-header">
+              <h3>Liste des Inscriptions</h3>
+              <div class="dc-actions">
+                <button class="btn-sm btn-danger-sm" onclick="clearInscriptions()">🗑️ Tout effacer</button>
+                <button class="btn-sm btn-success-sm" onclick="exportCSV()">📥 CSV</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>#</th><th>Nom Complet</th><th>Email</th><th>Téléphone</th><th>Service</th><th>Paiement</th><th>Date</th><th>⚙️</th></tr></thead>
+              <tbody id="inscTable"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <!-- ── CONTENU ── -->
+        <div class="adm-tab" id="adm-contenu">
+          <div class="adm-section-title">✏️ Contenu du Site</div>
+          <div class="adm-section-sub">Modifiez les textes et informations affichés</div>
+          <div class="alert alert-ok" id="contenuAlert"></div>
+          <div class="ef-card">
+            <h3>🏠 Section Hero — Accueil</h3>
+            <div class="ef-grid">
+              <div class="ef-fld full"><label>Titre Principal</label><input id="cHeroTitle" value="REPUBLIC MAINTENANCE SERVICES"/></div>
+              <div class="ef-fld full"><label>Sous-titre</label><input id="cHeroSub" value="Votre partenaire de confiance en Haïti & aux États-Unis"/></div>
+              <div class="ef-fld full"><label>Tagline</label><input id="cHeroTag" value="Location • Maintenance • Auto-École • Construction"/></div>
+            </div>
+            <button class="ef-save" onclick="saveContenu()">💾 Sauvegarder</button>
+          </div>
+          <div class="ef-card">
+            <h3>🏢 Informations Société</h3>
+            <div class="ef-grid">
+              <div class="ef-fld"><label>Nom Société</label><input id="cCompanyName" value="Republic Maintenances Services LLC"/></div>
+              <div class="ef-fld"><label>Année Fondation</label><input id="cFounded" value="2015"/></div>
+              <div class="ef-fld"><label>Email</label><input id="cEmail" value="republicmainservices@gmail.com"/></div>
+              <div class="ef-fld"><label>Tél Haïti</label><input id="cPhone" value="+509 37 97-2626"/></div>
+              <div class="ef-fld full"><label>Mission</label><textarea id="cMission">Fournir des services de qualité supérieure en location de véhicules lourds, maintenance bâtimentaire et formation à la conduite en Haïti et aux États-Unis.</textarea></div>
+            </div>
+            <button class="ef-save" onclick="saveContenu()">💾 Sauvegarder</button>
+          </div>
+          <div class="ef-card">
+            <h3>🎓 Auto-École — Forfaits</h3>
+            <div class="ef-grid">
+              <div class="ef-fld"><label>Prix Standard</label><input id="cPkgStd" value="10 000 HTG"/></div>
+              <div class="ef-fld"><label>Prix Complet</label><input id="cPkgComp" value="15 000 HTG"/></div>
+              <div class="ef-fld"><label>Prix Premium</label><input id="cPkgPrem" value="18 000 HTG"/></div>
+              <div class="ef-fld"><label>Tél Auto-École</label><input id="cAEPhone" value="+509 47 45-1919"/></div>
+            </div>
+            <button class="ef-save" onclick="saveContenu()">💾 Sauvegarder</button>
+          </div>
+        </div>
+
+        <!-- ── TARIFS ── -->
+        <div class="adm-tab" id="adm-tarifs">
+          <div class="adm-section-title">💰 Tarifs Véhicules</div>
+          <div class="adm-section-sub">Mettez à jour les prix de location par destination (USD)</div>
+          <div class="alert alert-ok" id="tarifsAlert"></div>
+          <div id="tarifsCards"></div>
+        </div>
+
+        <!-- ── PORTFOLIO ADMIN ── -->
+        <div class="adm-tab" id="adm-portfolio_adm">
+          <div class="adm-section-title">📸 Gestion Portfolio</div>
+          <div class="adm-section-sub">Ajoutez ou supprimez des images du portfolio</div>
+          <div class="alert alert-ok" id="portfolioAlert"></div>
+          <div class="ef-card">
+            <h3>➕ Ajouter une Image</h3>
+            <div class="ef-grid">
+              <div class="ef-fld full"><label>URL de l'Image</label><input id="pImgUrl" placeholder="https://example.com/image.jpg"/></div>
+              <div class="ef-fld full"><label>Légende / Description</label><input id="pImgCap" placeholder="Description de l'image..."/></div>
+            </div>
+            <button class="ef-save" onclick="addPortfolioImg()">➕ Ajouter au Portfolio</button>
+          </div>
+          <div class="data-card">
+            <div class="dc-header"><h3>Images Ajoutées</h3></div>
+            <div id="portfolioAdmList" style="padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;"></div>
+          </div>
+        </div>
+
+        <!-- ── SÉCURITÉ ── -->
+        <div class="adm-tab" id="adm-securite">
+          <div class="adm-section-title">🔐 Sécurité &amp; Accès</div>
+          <div class="adm-section-sub">Gérez les identifiants administrateur</div>
+          <div class="alert alert-ok" id="secAlert"></div>
+          <div class="ef-card">
+            <h3>👤 Changer les Identifiants</h3>
+            <div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:10px;padding:14px;margin-bottom:18px;font-size:13px;color:#92400e;">
+              ⚠️ <strong>Important:</strong> Notez bien vos nouveaux identifiants avant de sauvegarder.
+            </div>
+            <div class="ef-grid">
+              <div class="ef-fld"><label>Nom Actuel</label><input id="ssCurUser" type="text" placeholder="Nom actuel"/></div>
+              <div class="ef-fld"><label>Code Actuel</label><input id="ssCurCode" type="password" placeholder="Code actuel"/></div>
+              <div class="ef-fld"><label>Nouveau Nom</label><input id="ssNewUser" type="text" placeholder="Nouveau nom"/></div>
+              <div class="ef-fld"><label>Nouveau Code</label><input id="ssNewCode" type="password" placeholder="Nouveau code (min. 8 car.)"/></div>
+              <div class="ef-fld full"><label>Confirmer le Nouveau Code</label><input id="ssConfCode" type="password" placeholder="Confirmer..."/></div>
+            </div>
+            <button class="ef-save" onclick="changeCreds()">🔐 Mettre à Jour</button>
+          </div>
+          <div class="data-card">
+            <div class="dc-header"><h3>📋 Journal d'Activité</h3></div>
+            <div id="secLog" style="max-height:280px;overflow-y:auto;"></div>
+          </div>
+          <div class="ef-card" style="margin-top:18px;">
+            <h3>ℹ️ Identifiants Actuels</h3>
+            <div style="background:#f8fafc;border-radius:10px;padding:18px;font-size:14px;line-height:2.2;">
+              <div>👤 <strong>Nom:</strong> <span id="currentUserLbl" style="color:var(--navy);font-weight:700;">rms_admin</span></div>
+              <div>🔑 <strong>Code:</strong> <span style="color:var(--red);">••••••••• (masqué)</span></div>
+              <div>📅 <strong>Dernière connexion:</strong> <span id="lastLoginLbl" style="color:#64748b;">—</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /adm-main -->
+    </div><!-- /adm-layout -->
+  </div><!-- /admin-dash -->
+</div><!-- /page-admin -->
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+// ══════════════════════════════════════════
+// ROUTING
+// ══════════════════════════════════════════
+const PAGES=['accueil','portfolio','inscription','services','biographie','reseaux','admin'];
+let currentPage='accueil';
+
+function goto(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('nav-active'));
+  const nb=document.getElementById('nav-'+page);
+  if(nb) nb.classList.add('nav-active');
+  document.querySelectorAll('.mob-menu button').forEach(b=>b.classList.remove('nav-active'));
+  const mb=document.getElementById('mob-'+page);
+  if(mb) mb.classList.add('nav-active');
+  currentPage=page;
+  window.scrollTo(0,0);
+  if(page==='portfolio') renderGallery();
+  if(page==='services') renderServices();
+}
+
+function toggleMob(){
+  document.getElementById('mobMenu').classList.toggle('open');
+}
+
+// ══════════════════════════════════════════
+// VEHICLES DATA
+// ══════════════════════════════════════════
+let VEHICLES=JSON.parse(localStorage.getItem('rms_tarifs'))||[
+  {name:"Toyota Hiace",emoji:"🚐",features:["15 passagers","Diesel","Dir. Assistée"],pap:280,cayes:316,cap:500},
+  {name:"Camion Cube 20 pi",emoji:"🚛",features:["3 402 kg","Trans. Auto","Hayon Élévateur"],pap:500,cayes:700,cap:800},
+  {name:"Camion Cube 26 pi",emoji:"🚛",features:["4 535 kg","Trans. Auto","Climatisation"],pap:500,cayes:700,cap:800},
+  {name:"Camion Citerne 3500 gal",emoji:"🚒",features:["3 500 gal","360 HP","EURO2"],pap:380,cayes:400,cap:700},
+  {name:"Truck Trash Compactor",emoji:"🚚",features:["3 tonnes","Trans. Auto","Climatisation"],pap:150,cayes:220,cap:300},
+  {name:"Camion Plateforme 12 pi",emoji:"🏗️",features:["2 722 kg","Climatisation","Côtés Amovibles"],pap:200,cayes:316,cap:570},
+  {name:"Camion Benne Basculante",emoji:"🏗️",features:["9 tonnes","360 HP","ZF 16 S 252"],pap:250,cayes:390,cap:570},
+];
+const CITY_LABELS={pap:"Port-au-P.",cayes:"Les Cayes",cap:"Cap-H."};
+let currentDest='pap';
+
+function setDest(dest,btn){
+  currentDest=dest;
+  document.querySelectorAll('.dest-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVehicles();
+}
+
+function renderVehicles(){
+  const grid=document.getElementById('vehiclesGrid');
+  grid.innerHTML=VEHICLES.map(v=>`
+    <div class="vehicle-card">
+      <div class="vehicle-top">
+        <span>${v.emoji}</span>
+        <div class="vehicle-badge">USD ${v[currentDest]}</div>
+      </div>
+      <div class="vehicle-body">
+        <div class="vehicle-name">${v.name}</div>
+        <div class="vehicle-tags">${v.features.map(f=>`<span class="vtag">${f}</span>`).join('')}</div>
+        <div class="price-row">
+          ${['pap','cayes','cap'].map(k=>`
+            <div class="price-cell ${k===currentDest?'active':''}">
+              <div class="pc-city">${CITY_LABELS[k]}</div>
+              <div class="pc-amt">$${v[k]}</div>
+            </div>`).join('')}
+        </div>
+        <button class="reserve-btn" onclick="goto('inscription')">📋 Réserver</button>
+      </div>
+    </div>`).join('');
+}
+renderVehicles();
+
+// ══════════════════════════════════════════
+// PORTFOLIO
+// ══════════════════════════════════════════
+const BASE_IMAGES=[
+  {url:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600",caption:"Cours Pratiques Auto-École"},
+  {url:"https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600",caption:"Flotte de Véhicules RMS"},
+  {url:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600",caption:"Services de Maintenance"},
+  {url:"https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600",caption:"Cours Théoriques"},
+  {url:"https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600",caption:"Équipe RMS"},
+  {url:"https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600",caption:"Camion Citerne"},
+];
+const BASE_VIDEOS=[
+  {url:"https://www.youtube.com/embed/dQw4w9WgXcQ",caption:"Présentation RMS Auto-École"},
+  {url:"https://www.youtube.com/embed/dQw4w9WgXcQ",caption:"Séance Pratique sur Circuit"},
+];
+
+function renderGallery(){
+  const extra=JSON.parse(localStorage.getItem('rms_portfolio_images')||'[]');
+  const allImgs=[...BASE_IMAGES,...extra];
+  document.getElementById('galleryGrid').innerHTML=allImgs.map((img)=>`
+    <div class="gal-item" onclick="openLB('${img.url}','${img.caption}')">
+      <img src="${img.url}" alt="${img.caption}" loading="lazy"/>
+      <div class="gal-cap">${img.caption}</div>
+    </div>`).join('');
+  document.getElementById('videoGrid').innerHTML=BASE_VIDEOS.map(v=>`
+    <div class="vid-card">
+      <div class="vid-wrap"><iframe src="${v.url}" allowfullscreen></iframe></div>
+      <div class="vid-label">🎬 ${v.caption}</div>
+    </div>`).join('');
+}
+
+function showPortfolioTab(tab,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('pt-'+tab).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function openLB(url,cap){
+  document.getElementById('lbImg').src=url;
+  document.getElementById('lbCap').textContent=cap;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLB(){document.getElementById('lightbox').classList.remove('open');}
+
+// ══════════════════════════════════════════
+// INSCRIPTION
+// ══════════════════════════════════════════
+const PAYS_LIST=[
+  {k:"moncash",label:"MonCash",emoji:"📱",color:"#FF6B35",
+    instr:"📱 <strong>MonCash:</strong> Envoyez au <strong>+509 37 97-2626</strong><br/>Référence: nom + service"},
+  {k:"natcash",label:"NatCash",emoji:"💸",color:"#00A651",
+    instr:"💸 <strong>NatCash:</strong> Envoyez au <strong>+509 47 45-1919</strong><br/>Référence: nom + service"},
+  {k:"buh",label:"BUH",emoji:"🏦",color:"#003087",
+    instr:"🏦 <strong>Virement BUH:</strong> Contactez-nous pour les détails du compte"},
+  {k:"bnrh",label:"BNC",emoji:"🏛️",color:"#1B365D",
+    instr:"🏛️ <strong>Virement BNC:</strong> Contactez-nous pour les détails du compte"},
+  {k:"sogebank",label:"Sogebank",emoji:"💼",color:"#E31E24",
+    instr:"💼 <strong>Virement Sogebank:</strong> Contactez-nous pour les détails du compte"},
+  {k:"unibank",label:"Unibank",emoji:"🏦",color:"#0066CC",
+    instr:"🏦 <strong>Virement Unibank:</strong> Contactez-nous pour les détails du compte"},
+  {k:"card",label:"Carte Banc.",emoji:"💳",color:"#7B2FBE",
+    instr:"💳 <strong>Carte Bancaire:</strong> Vous recevrez un lien de paiement sécurisé"},
+  {k:"virement",label:"Virement Int'l",emoji:"🌍",color:"#FF8C00",
+    instr:"🌍 <strong>Virement International:</strong><br/>228 Route 59 Suite 247, Nanuet NY 10954<br/>Tél: (845) 243-0875"},
+];
+let selectedPay='moncash';
+
+function renderPayGrid(){
+  document.getElementById('payGrid').innerHTML=PAYS_LIST.map(p=>`
+    <div class="pay-opt" onclick="selectPay('${p.k}')"
+      style="border-color:${selectedPay===p.k?p.color:'#e2e8f0'};background:${selectedPay===p.k?p.color+'22':'#fff'}">
+      <div class="pay-icon">${p.emoji}</div>
+      <div class="pay-label" style="color:${selectedPay===p.k?p.color:'#555'}">${p.label}</div>
+    </div>`).join('');
+  const pay=PAYS_LIST.find(p=>p.k===selectedPay);
+  document.getElementById('payInstructions').innerHTML=pay.instr;
+}
+function selectPay(k){selectedPay=k;renderPayGrid();}
+renderPayGrid();
+
+function submitInsc(){
+  const nom=document.getElementById('iNom').value.trim();
+  const prenom=document.getElementById('iPrenom').value.trim();
+  const email=document.getElementById('iEmail').value.trim();
+  const phone=document.getElementById('iPhone').value.trim();
+  if(!nom||!prenom||!email||!phone){alert('Veuillez remplir tous les champs obligatoires *');return;}
+  const inscriptions=JSON.parse(localStorage.getItem('rms_inscriptions')||'[]');
+  inscriptions.push({nom,prenom,email,phone,
+    service:document.getElementById('iService').value,
+    message:document.getElementById('iMessage').value,
+    payment:selectedPay,date:new Date().toLocaleString('fr-FR')});
+  localStorage.setItem('rms_inscriptions',JSON.stringify(inscriptions));
+  addSecLog('success','Nouvelle inscription: '+prenom+' '+nom);
+  document.getElementById('successMsg').textContent=`Merci ${prenom} ${nom}! Nous vous contacterons sous 24h au ${phone}.`;
+  document.getElementById('inscForm').style.display='none';
+  document.getElementById('inscSuccess').classList.add('show');
+}
+function resetInsc(){
+  document.getElementById('inscForm').style.display='block';
+  document.getElementById('inscSuccess').classList.remove('show');
+  ['iNom','iPrenom','iEmail','iPhone','iMessage'].forEach(id=>document.getElementById(id).value='');
+}
+
+// ══════════════════════════════════════════
+// SERVICES
+// ══════════════════════════════════════════
+const SERVICES_DATA=[
+  {icon:"🚛",title:"Location de Véhicules",color:"#1B365D",
+    desc:"Camions lourds, bennes, citernes, plateformes et minivans disponibles à Port-au-Prince, Les Cayes et Cap-Haïtien.",
+    details:["Toyota Hiace 15 passagers","Camion Cube 20 & 26 pieds","Camion Citerne 3500 gal","Camion Benne Basculante 9T","Truck Trash Compactor","Camion Plateforme 12 pieds"]},
+  {icon:"🔧",title:"Maintenance & Construction",color:"#E31E24",
+    desc:"Services professionnels de plomberie, électricité, maçonnerie, peinture et déménagement.",
+    details:["Plomberie résidentielle & commerciale","Installation électrique","Maçonnerie & béton armé","Peinture intérieure & extérieure","Déménagement avec engins","Main-d'œuvre qualifiée"]},
+  {icon:"🛒",title:"Achat de Véhicules",color:"#2a52a0",
+    desc:"Achetez des véhicules industriels et de transport pour votre entreprise.",
+    details:["Camions industriels","Véhicules de transport","Équipement lourd","Financement disponible","Livraison en Haïti","Support après-vente"]},
+  {icon:"🎓",title:"Auto-École RMS",color:"#007BFF",
+    desc:"Formation à la conduite avec des instructeurs certifiés. Obtenez votre permis en 30 à 60 jours.",
+    details:["24h de cours théoriques","15h à 45h de pratique","Horaires flexibles","Examen à la DCPR","Certificat officiel","Location véhicule examen"]},
+  {icon:"📄",title:"Documentation",color:"#6B46C1",
+    desc:"Assistance pour vos démarches administratives et documents officiels.",
+    details:["Permis de conduire","Contrats de location","Factures officielles","Attestations de service","Documents légaux LLC","Rapports d'inspection"]},
+  {icon:"💧",title:"Livraison d'Eau",color:"#0891B2",
+    desc:"Approvisionnement en eau potable par camion citerne de 3500 gallons.",
+    details:["Camion citerne 3500 gallons","Eau potable certifiée","Livraison à domicile","Zones: PAP, Cayes, Cap","Commande sur mesure","Tarifs compétitifs"]},
+];
+let openSrv=null;
+
+function renderServices(){
+  document.getElementById('servicesGrid').innerHTML=SERVICES_DATA.map((s,i)=>`
+    <div class="srv-card ${openSrv===i?'open':''}" style="border-color:${openSrv===i?s.color:'transparent'}" onclick="toggleSrv(${i})">
+      <div class="srv-bar" style="background:${s.color}"></div>
+      <div class="srv-body">
+        <div class="srv-icon">${s.icon}</div>
+        <div class="srv-title">${s.title}</div>
+        <div class="srv-desc">${s.desc}</div>
+        ${openSrv===i?`<ul class="srv-list">${s.details.map(d=>`<li><span style="color:${s.color};font-weight:700">✓</span> ${d}</li>`).join('')}</ul>`:''}
+        <button class="srv-cta" style="border-color:${s.color};background:${openSrv===i?s.color:'transparent'};color:${openSrv===i?'#fff':s.color}"
+          onclick="event.stopPropagation();goto('inscription')">S'inscrire / Réserver →</button>
+      </div>
+    </div>`).join('');
+}
+function toggleSrv(i){openSrv=openSrv===i?null:i;renderServices();}
+
+// ══════════════════════════════════════════
+// ADMIN AUTH
+// ══════════════════════════════════════════
+let CREDS=JSON.parse(localStorage.getItem('rms_admin_creds'))||{user:'rms_admin',code:'RMS@2025!'};
+let secLog=JSON.parse(localStorage.getItem('rms_sec_log'))||[];
+
+function doLogin(){
+  const u=document.getElementById('alUser').value.trim();
+  const c=document.getElementById('alCode').value.trim();
+  if(u===CREDS.user&&c===CREDS.code){
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminDash').classList.add('show');
+    document.getElementById('admUserDisplay').textContent='Jean Claude HILAIRE';
+    document.getElementById('currentUserLbl').textContent=CREDS.user;
+    document.getElementById('lastLoginLbl').textContent=new Date().toLocaleString('fr-FR');
+    addSecLog('success','Connexion réussie — '+u);
+    refreshDashboard();
+    loadContenu();
+    renderTarifs();
+  } else {
+    const e=document.getElementById('alErr');
+    e.style.display='block';
+    addSecLog('danger','Tentative échouée');
+    setTimeout(()=>e.style.display='none',3000);
+  }
+}
+function doLogout(){
+  document.getElementById('adminLogin').style.display='flex';
+  document.getElementById('adminDash').classList.remove('show');
+  document.getElementById('alUser').value='';
+  document.getElementById('alCode').value='';
+  addSecLog('warning','Déconnexion');
+}
+function changeCreds(){
+  const cu=document.getElementById('ssCurUser').value.trim();
+  const cc=document.getElementById('ssCurCode').value.trim();
+  const nu=document.getElementById('ssNewUser').value.trim();
+  const nc=document.getElementById('ssNewCode').value.trim();
+  const co=document.getElementById('ssConfCode').value.trim();
+  if(cu!==CREDS.user||cc!==CREDS.code){showAdmAlert('secAlert','❌ Identifiants actuels incorrects.','err');return;}
+  if(!nu||nc.length<8){showAdmAlert('secAlert','❌ Le nouveau code doit avoir au moins 8 caractères.','err');return;}
+  if(nc!==co){showAdmAlert('secAlert','❌ Les nouveaux codes ne correspondent pas.','err');return;}
+  CREDS={user:nu,code:nc};
+  localStorage.setItem('rms_admin_creds',JSON.stringify(CREDS));
+  document.getElementById('currentUserLbl').textContent=nu;
+  addSecLog('success','Identifiants mis à jour — Nouveau nom: '+nu);
+  showAdmAlert('secAlert','✅ Identifiants mis à jour avec succès!','ok');
+  ['ssCurUser','ssCurCode','ssNewUser','ssNewCode','ssConfCode'].forEach(id=>document.getElementById(id).value='');
+}
+
+// ══════════════════════════════════════════
+// ADMIN TABS
+// ══════════════════════════════════════════
+function admTab(name,btn){
+  document.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('adm-tab-active'));
+  document.getElementById('adm-'+name).classList.add('adm-tab-active');
+  document.querySelectorAll('.adm-nav-item').forEach(b=>b.classList.remove('adm-active'));
+  if(btn) btn.classList.add('adm-active');
+  else {
+    const map={dashboard:0,inscriptions:1,contenu:2,tarifs:3,portfolio_adm:4,securite:5};
+    const items=document.querySelectorAll('.adm-nav-item');
+    if(items[map[name]]) items[map[name]].classList.add('adm-active');
+  }
+  if(name==='inscriptions') renderInscriptions();
+  if(name==='securite') renderSecLog();
+  if(name==='portfolio_adm') renderPortfolioAdm();
+  if(name==='tarifs') renderTarifs();
+  if(name==='dashboard') refreshDashboard();
+}
+
+// ══════════════════════════════════════════
+// ADMIN INSCRIPTIONS
+// ══════════════════════════════════════════
+const SVC_LBL={location:'🚛 Location',autoecole:'🎓 Auto-École',maintenance:'🔧 Maintenance',achat:'🛒 Achat',documentation:'📄 Documentation'};
+const PAY_LBL={moncash:'📱 MonCash',natcash:'💸 NatCash',buh:'🏦 BUH',bnrh:'🏛️ BNC',sogebank:'💼 Sogebank',unibank:'🏦 Unibank',card:'💳 Carte',virement:'🌍 Virement'};
+
+function getInscriptions(){return JSON.parse(localStorage.getItem('rms_inscriptions')||'[]');}
+
+function renderInscriptions(){
+  const data=getInscriptions();
+  const tbody=document.getElementById('inscTable');
+  if(!data.length){
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;"><div style="font-size:32px">📭</div>Aucune inscription reçue</td></tr>';
+    return;
+  }
+  tbody.innerHTML=data.map((d,i)=>`
+    <tr>
+      <td><span class="badge badge-blue">#${i+1}</span></td>
+      <td><strong>${d.prenom} ${d.nom}</strong></td>
+      <td>${d.email}</td>
+      <td>${d.phone}</td>
+      <td><span class="badge badge-green">${SVC_LBL[d.service]||d.service}</span></td>
+      <td><span class="badge badge-yellow">${PAY_LBL[d.payment]||d.payment}</span></td>
+      <td style="font-size:12px;color:#64748b;white-space:nowrap;">${d.date}</td>
+      <td><button onclick="delInsc(${i})" class="btn-sm btn-danger-sm">🗑️</button></td>
+    </tr>`).join('');
+}
+
+function delInsc(i){
+  if(!confirm('Supprimer cette inscription?'))return;
+  const data=getInscriptions();data.splice(i,1);
+  localStorage.setItem('rms_inscriptions',JSON.stringify(data));
+  renderInscriptions();refreshDashboard();
+}
+function clearInscriptions(){
+  if(!confirm('Effacer TOUTES les inscriptions?'))return;
+  localStorage.removeItem('rms_inscriptions');
+  renderInscriptions();refreshDashboard();
+  showAdmAlert('inscAlert','✅ Toutes les inscriptions effacées.','ok');
+}
+function exportCSV(){
+  const data=getInscriptions();
+  if(!data.length){alert('Aucune inscription à exporter.');return;}
+  const headers=['#','Nom','Prénom','Email','Téléphone','Service','Paiement','Message','Date'];
+  const rows=data.map((d,i)=>[i+1,d.nom,d.prenom,d.email,d.phone,d.service,d.payment,d.message||'',d.date]);
+  const csv=[headers,...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='rms_inscriptions_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+}
+
+// ══════════════════════════════════════════
+// ADMIN CONTENU
+// ══════════════════════════════════════════
+function loadContenu(){
+  const s=JSON.parse(localStorage.getItem('rms_contenu')||'{}');
+  const def={cHeroTitle:'REPUBLIC MAINTENANCE SERVICES',cHeroSub:"Votre partenaire de confiance en Haïti & aux États-Unis",cHeroTag:'Location • Maintenance • Auto-École • Construction',cCompanyName:'Republic Maintenances Services LLC',cFounded:'2015',cEmail:'republicmainservices@gmail.com',cPhone:'+509 37 97-2626',cMission:'Fournir des services de qualité supérieure...',cPkgStd:'10 000 HTG',cPkgComp:'15 000 HTG',cPkgPrem:'18 000 HTG',cAEPhone:'+509 47 45-1919'};
+  Object.keys(def).forEach(k=>{const el=document.getElementById(k);if(el)el.value=s[k]||def[k];});
+}
+function saveContenu(){
+  const keys=['cHeroTitle','cHeroSub','cHeroTag','cCompanyName','cFounded','cEmail','cPhone','cMission','cPkgStd','cPkgComp','cPkgPrem','cAEPhone'];
+  const obj={};keys.forEach(k=>{const el=document.getElementById(k);if(el)obj[k]=el.value;});
+  localStorage.setItem('rms_contenu',JSON.stringify(obj));
+  showAdmAlert('contenuAlert','✅ Contenu sauvegardé!','ok');
+  addSecLog('success','Contenu du site mis à jour');
+}
+
+// ══════════════════════════════════════════
+// ADMIN TARIFS
+// ══════════════════════════════════════════
+function renderTarifs(){
+  document.getElementById('tarifsCards').innerHTML=VEHICLES.map((v,i)=>`
+    <div class="ef-card">
+      <h3>${v.emoji} ${v.name}</h3>
+      <div class="ef-grid">
+        <div class="ef-fld"><label>💰 Port-au-Prince (USD)</label><input type="number" id="tv_${i}_pap" value="${v.pap}"/></div>
+        <div class="ef-fld"><label>💰 Les Cayes (USD)</label><input type="number" id="tv_${i}_cayes" value="${v.cayes}"/></div>
+        <div class="ef-fld"><label>💰 Cap-Haïtien (USD)</label><input type="number" id="tv_${i}_cap" value="${v.cap}"/></div>
+      </div>
+    </div>`).join('')+`<button class="ef-save" onclick="saveTarifs()">💾 Sauvegarder tous les tarifs</button>`;
+}
+function saveTarifs(){
+  VEHICLES=VEHICLES.map((v,i)=>({...v,
+    pap:parseInt(document.getElementById('tv_'+i+'_pap').value)||v.pap,
+    cayes:parseInt(document.getElementById('tv_'+i+'_cayes').value)||v.cayes,
+    cap:parseInt(document.getElementById('tv_'+i+'_cap').value)||v.cap}));
+  localStorage.setItem('rms_tarifs',JSON.stringify(VEHICLES));
+  renderVehicles();
+  showAdmAlert('tarifsAlert','✅ Tarifs mis à jour — Le catalogue est actualisé!','ok');
+  addSecLog('success','Tarifs véhicules mis à jour');
+}
+
+// ══════════════════════════════════════════
+// ADMIN PORTFOLIO
+// ══════════════════════════════════════════
+function addPortfolioImg(){
+  const url=document.getElementById('pImgUrl').value.trim();
+  const cap=document.getElementById('pImgCap').value.trim();
+  if(!url||!cap){showAdmAlert('portfolioAlert','❌ URL et légende sont obligatoires.','err');return;}
+  const imgs=JSON.parse(localStorage.getItem('rms_portfolio_images')||'[]');
+  imgs.push({url,caption:cap});
+  localStorage.setItem('rms_portfolio_images',JSON.stringify(imgs));
+  document.getElementById('pImgUrl').value='';
+  document.getElementById('pImgCap').value='';
+  showAdmAlert('portfolioAlert','✅ Image ajoutée au portfolio!','ok');
+  renderPortfolioAdm();
+}
+function renderPortfolioAdm(){
+  const imgs=JSON.parse(localStorage.getItem('rms_portfolio_images')||'[]');
+  const c=document.getElementById('portfolioAdmList');
+  if(!imgs.length){
+    c.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:32px;color:#94a3b8;"><div style="font-size:32px">📷</div><p>Aucune image ajoutée via admin</p></div>';
+    return;
+  }
+  c.innerHTML=imgs.map((img,i)=>`
+    <div style="border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1);position:relative;">
+      <img src="${img.url}" alt="${img.caption}" style="width:100%;height:130px;object-fit:cover;" onerror="this.parentElement.style.background='#f1f5f9';this.style.display='none'"/>
+      <div style="padding:9px;background:#fff;font-size:12px;font-weight:600;color:var(--text);">${img.caption}</div>
+      <button onclick="removePortImg(${i})" style="position:absolute;top:7px;right:7px;background:var(--red);color:#fff;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:14px;line-height:26px;text-align:center;">×</button>
+    </div>`).join('');
+}
+function removePortImg(i){
+  const imgs=JSON.parse(localStorage.getItem('rms_portfolio_images')||'[]');
+  imgs.splice(i,1);
+  localStorage.setItem('rms_portfolio_images',JSON.stringify(imgs));
+  renderPortfolioAdm();
+}
+
+// ══════════════════════════════════════════
+// ADMIN SECURITY LOG
+// ══════════════════════════════════════════
+function addSecLog(type,msg){
+  secLog.unshift({type,msg,time:new Date().toLocaleString('fr-FR')});
+  if(secLog.length>50)secLog=secLog.slice(0,50);
+  localStorage.setItem('rms_sec_log',JSON.stringify(secLog));
+}
+function renderSecLog(){
+  const c=document.getElementById('secLog');
+  if(!secLog.length){c.innerHTML='<div style="text-align:center;padding:28px;color:#94a3b8;">Aucune activité</div>';return;}
+  c.innerHTML=secLog.map(l=>`
+    <div class="log-row">
+      <div class="log-dot ${l.type==='success'?'ld-ok':l.type==='warning'?'ld-warn':'ld-err'}"></div>
+      <div style="flex:1;font-weight:600">${l.msg}</div>
+      <div style="color:#94a3b8;font-size:11.5px;white-space:nowrap">${l.time}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════
+// ADMIN DASHBOARD REFRESH
+// ══════════════════════════════════════════
+function refreshDashboard(){
+  const data=getInscriptions();
+  document.getElementById('ds-total').textContent=data.length;
+  const today=new Date().toLocaleDateString('fr-FR');
+  document.getElementById('ds-today').textContent=data.filter(d=>d.date&&d.date.startsWith(today)).length;
+  const tbody=document.getElementById('ds-recent');
+  const recent=data.slice(-5).reverse();
+  tbody.innerHTML=recent.length?recent.map(d=>`
+    <tr>
+      <td><strong>${d.prenom} ${d.nom}</strong></td>
+      <td><span class="badge badge-green">${SVC_LBL[d.service]||d.service}</span></td>
+      <td>${d.phone}</td>
+      <td><span class="badge badge-yellow">${PAY_LBL[d.payment]||d.payment}</span></td>
+      <td style="font-size:12px;color:#64748b;">${d.date}</td>
+    </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;padding:32px;color:#94a3b8;">Aucune inscription pour le moment</td></tr>';
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function showAdmAlert(id,msg,type){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.className='alert '+(type==='err'?'alert-err':'alert-ok')+' show';
+  el.innerHTML=msg;
+  setTimeout(()=>el.classList.remove('show'),4000);
+}
+</script>
 </body>
 </html>
